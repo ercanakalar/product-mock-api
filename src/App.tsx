@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import LoadingSpinner from './components/loading/LoadingSpinner';
 import { Main } from './pages/main/Main';
-import { Header } from './pages/header/Header';
+import { Header } from './features/header/Header';
 
 function App() {
   const ProductPage = lazy(() => import('./pages/product/ProductPage'));

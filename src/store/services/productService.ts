@@ -3,6 +3,7 @@ import { baseQuery } from '../bases/baseQuery';
 import { Product } from '../../type/product-type';
 import { setBrands, setModels } from '../slices/productSlice';
 import store from '../index';
+import { sortOptionsValue } from '../../constants/sortConstant';
 
 export const productService = createApi({
   reducerPath: 'productService',
@@ -20,10 +21,9 @@ export const productService = createApi({
       query: ({ sort = '', brands = [], models = [] }) => {
         let queryString = '?';
 
-        if (sort === 'Old to new') queryString += `&sortBy=createdAt&order=asc`;
-        else if (sort === 'New to old') queryString += `&sortBy=createdAt&order=desc`;
-        else if (sort === 'Price high to low') queryString += `&sortBy=price&order=desc`;
-        else if (sort === 'Price low to high') queryString += `&sortBy=price&order=asc`;
+        if (sort && sortOptionsValue[sort as keyof typeof sortOptionsValue]) {
+          queryString += `&${sortOptionsValue[sort as keyof typeof sortOptionsValue]}`;
+        }
 
         if (brands.length > 0) queryString += `&brand=${brands.join(',')}`;
         if (models.length > 0) queryString += `&model=${models.join(',')}`;
