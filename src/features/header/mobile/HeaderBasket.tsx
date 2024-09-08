@@ -1,7 +1,7 @@
 import { BasketCard } from '../../../components/basket/BasketCard';
 import Checkout from '../../../components/checkout/Checkout';
 
-const HeaderBasket = (props: { toggleBasket: () => void }) => {
+const HeaderBasket = (props: { toggleBasket: () => void; }) => {
   return (
     <div className='fixed inset-0 z-50 bg-white flex flex-col h-full overflow-y-auto'>
       <div className='flex justify-between p-4 border-b border-gray-200'>

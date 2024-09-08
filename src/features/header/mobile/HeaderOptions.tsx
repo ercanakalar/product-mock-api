@@ -11,10 +11,11 @@ const HeaderOptions = (props: { totalProducts: number; toggleBasket: () => void 
   const dispatch = useAppDispatch();
 
   const totalProducts = useAppSelector((state: { cart: CartState }) => state.cart.totalProducts);
+  const cartItems = useAppSelector((state: { cart: CartState }) => state.cart.items);
 
   useEffect(() => {
     dispatch(getTotalCart());
-  }, [dispatch]);
+  }, [dispatch, cartItems]);
 
   return (
     <div className='fixed md:hidden lmd:hidden lg:hidden xl:hidden 2xl:hidden bottom-0 left-0 w-full bg-white shadow-lg border-t border-gray-200 flex justify-around items-center'>
