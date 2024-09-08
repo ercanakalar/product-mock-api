@@ -37,18 +37,22 @@ const ProductCard = (props: {
   };
 
   return (
-    <div className='flex w-44 h-80'>
-      <CardBase width='w-44' justify='justify-center'>
+    <div className='flex w-auto h-fit lmd:h-80 lg:h-80 xl:h-80 2xl:h-80'>
+      <CardBase width='w-auto lmd:w-44 lg:w-44 xl:w-44 2xl:w-44' justify='justify-center'>
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-4 cursor-pointer' onClick={() => handleCardClick(props?.product?.id)}>
-            <img className='flex w-40 h-36' alt={props.product.name} src={props.product.image} />
-            <p className='flex text-sm font-medium text-cardPrice'>{convertCurrencyTr(Number(props.product.price))}</p>
-            <h3 className='flex text-sm font-medium'>{props.product.name}</h3>
+            <img className='flex w-36 h-30 lmd:w-40 lg:w-40 xl:w-40 2xl:w-40 lmd:h-36 lg:h-36 xl:h-36 2xl:h-36' alt={props.product.name} src={props.product.image} />
+            <p className='flex font-medium text-cardPrice text-xs lg:text-base lmd:text-base xl:text-base 2xl:text-base'>
+              {convertCurrencyTr(Number(props.product.price))}
+            </p>
+            <h3 className='flex font-medium text-xs text-nowrap lg:text-base lmd:text-base xl:text-base 2xl:text-base'>
+              {props.product.name}
+            </h3>
           </div>
 
           <button
             onClick={handleAddToCart}
-            className='px-4 py-2 text-buttonText bg-button rounded text-base font-normal'
+            className='px-2 py-1 lmd:px-4 lg:px-4 xl:px-4 2xl:px-4 lmd:py-2 lg:py-2 xl:py-2 2xl:py-2 text-buttonText bg-button rounded text-base font-normal'
           >
             Add to Cart
           </button>

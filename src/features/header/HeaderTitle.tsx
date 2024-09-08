@@ -6,5 +6,5 @@ export const HeaderTitle = () => {
   const homeBack = () => {
     navigate(`/`);
   };
-  return <h1 onClick={homeBack} className='font-extrabold text-2xl text-center text-headerTextColor cursor-pointer'>Eteration</h1>;
+  return <h1 onClick={homeBack} className=' lmd:font-extrabold lmd:text-2xl text-center text-headerTextColor cursor-pointer'>Eteration</h1>;
 };

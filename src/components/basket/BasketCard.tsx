@@ -20,7 +20,7 @@ export const BasketCard = () => {
   };
 
   return (
-    <CardBase title='Cart'>
+    <CardBase id='basket' title='Cart'>
       <div className='relative gap-4 w-full'>
         {cartItems.length > 0 ? (
           cartItems.map((item: CartItem, index: number) => {

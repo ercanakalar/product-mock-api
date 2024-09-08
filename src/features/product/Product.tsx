@@ -82,8 +82,8 @@ export const Product = () => {
   }
 
   return (
-    <div className='col-span-4 w-2/4 pt-6 mb-6'>
-      <div className='grid grid-cols-1 2xl:grid-cols-4 gap-4 justify-items-center'>
+    <div className='cal-span-2 lg:col-span-3 2xl:col-span-4 w-full md:w-3/4 xl:w-2/4 2xl:w-2/4 pt-6 mb-6'>
+      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 md:gap-1 gap-4 justify-items-center'>
         {currentProducts?.length ? (
           currentProducts.map((product) => (
             <Suspense key={product.id} fallback={<LoadingSpinner />}>

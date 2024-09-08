@@ -1,22 +1,16 @@
-import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { setSort } from '../../store/slices/productSlice';
-
-import { ProductState } from '../../type/product-type';
-
+import { sortOptions } from '../../constants/sortConstant';
 import { CardBase } from '../card/base/CardBase';
 
-export const SortBy = (props: { className?: string; title: string; filter: string[] }) => {
-  const dispatch = useAppDispatch();
-  const sort = useAppSelector((state: { product: ProductState }) => state.product.sort);
-
-  const handleSortChange = (value: string) => {
-    dispatch(setSort(value));
-  };
-
+export const SortBy = (props: {
+  className?: string;
+  title: string;
+  selectedSort?: string;
+  handleSortChange: (value: string) => void;
+}) => {
   return (
-    <CardBase position={props.className} title={props.title}>
-      <div className='flex flex-col gap-2 pt-2'>
-        {props.filter.map((filter) => (
+    <CardBase position={props.className} title={props.title} width='w-auto lmd:w-60 lg:w-60 xl:w-60 2xl:w-60'>
+      <div className='flex flex-col gap-2 pt-2 text-xs lg:text-base lmd:text-base xl:text-base 2xl:text-base'>
+        {sortOptions.map((filter) => (
           <div key={filter} className='flex items-center space-x-2'>
             <input
               type='radio'
@@ -24,8 +18,8 @@ export const SortBy = (props: { className?: string; title: string; filter: strin
               name='sortBy'
               value={filter}
               className='h-4 w-4'
-              checked={sort === filter}
-              onChange={() => handleSortChange(filter)}
+              checked={props.selectedSort === filter}
+              onChange={() => props?.handleSortChange(filter)}
             />
             <label htmlFor={filter} className='cursor-pointer'>
               {filter}

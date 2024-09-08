@@ -18,4 +18,5 @@ export interface ProductState {
   sort: string;
   searchTerm: string;
   pagination: number;
+  totalProducts: number;
 }

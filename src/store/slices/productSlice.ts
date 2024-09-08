@@ -11,6 +11,7 @@ const initialState: ProductState = {
   sort: '',
   searchTerm: '',
   pagination: 1,
+  totalProducts: 0,
 };
 
 const productSlice = createSlice({

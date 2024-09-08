@@ -18,8 +18,8 @@ export const Filter = (props: {
   );
 
   return (
-    <CardBase position={props.className} title={props.title}>
-      <div>
+    <CardBase position={props.className} title={props.title} width='w-auto lmd:w-60 lg:w-60 xl:w-60 2xl:w-60'>
+      <div className='text-xs w-full lg:text-base lmd:text-base xl:text-base 2xl:text-base'>
         <Search
           className='bg-filterSearch h-10'
           value={searchTerm}

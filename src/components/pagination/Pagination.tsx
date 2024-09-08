@@ -17,7 +17,7 @@ const Pagination = ({
   };
 
   return (
-    <div className='flex justify-center items-center py-4 gap-1'>
+    <div className='flex justify-center items-center py-4 gap-1 pb-20 md:pb-10 lg:pb-10 2xl:pb-0'>
       <button onClick={() => handleClick(currentPage - 1)} disabled={currentPage === 1} className='px-2 py-1'>
         {'<'}
       </button>

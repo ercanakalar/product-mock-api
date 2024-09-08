@@ -5,6 +5,7 @@ import { CartItem, CartState } from '../../type/cart-type';
 const initialState: CartState = {
   items: JSON.parse(localStorage.getItem('cart') || '[]'),
   totalPrice: 0,
+  totalProducts: 0,
 };
 
 const cartSlice = createSlice({
@@ -54,9 +55,12 @@ const cartSlice = createSlice({
       });
       state.totalPrice = total;
     },
+    getTotalCart: (state) => {
+      state.totalProducts = state.items.reduce((acc, item) => acc + item.quantity, 0);
+    },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, calculateCheckout } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, calculateCheckout, getTotalCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
