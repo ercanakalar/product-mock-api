@@ -5,17 +5,17 @@ import { CardBase } from '../card/base/CardBase';
 
 import convertCurrencyTr from '../../utils/convertCurrency';
 
-import { CartItem } from '../../type/cart-type';
+import { CartItem, CartState } from '../../type/cart-type';
 
 export const BasketCard = () => {
   const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state: any) => state.cart.items);
+  const cartItems = useAppSelector((state: { cart: CartState }) => state.cart.items);
 
   const removeCart = (id: string) => {
     dispatch(removeFromCart(id));
   };
 
-  const addCart = (item: any) => {
+  const addCart = (item: CartItem) => {
     dispatch(addToCart({ ...item, quantity: 1 }));
   };
 

@@ -8,5 +8,5 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[];
-  totalPrice?: number;
+  totalPrice: number;
 }

@@ -17,5 +17,5 @@ export interface ProductState {
   products: Product[];
   sort: string;
   searchTerm: string;
-  pagination?: number;
+  pagination: number;
 }

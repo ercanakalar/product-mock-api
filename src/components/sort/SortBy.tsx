@@ -1,11 +1,13 @@
 import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { setSort } from '../../store/slices/productSlice';
 
+import { ProductState } from '../../type/product-type';
+
 import { CardBase } from '../card/base/CardBase';
 
 export const SortBy = (props: { className?: string; title: string; filter: string[] }) => {
   const dispatch = useAppDispatch();
-  const sort = useAppSelector((state: any) => state.product.sort);
+  const sort = useAppSelector((state: { product: ProductState }) => state.product.sort);
 
   const handleSortChange = (value: string) => {
     dispatch(setSort(value));

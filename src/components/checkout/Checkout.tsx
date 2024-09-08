@@ -7,9 +7,11 @@ import { CardBase } from '../card/base/CardBase';
 
 import convertCurrencyTr from '../../utils/convertCurrency';
 
+import { CartState } from '../../type/cart-type';
+
 const Checkout = () => {
   const dispatch = useAppDispatch();
-  const price = useAppSelector((state: any) => state.cart.totalPrice);
+  const price = useAppSelector((state: { cart: CartState }) => state.cart.totalPrice);
 
   useEffect(() => {
     dispatch(calculateCheckout());

@@ -9,14 +9,15 @@ import { setPaginationPage } from '../../store/slices/productSlice';
 import ProductCard from '../../components/card/ProductCard';
 import LoadingSpinner from '../../components/loading/LoadingSpinner';
 import Pagination from '../../components/pagination/Pagination';
+import { ProductState } from '../../type/product-type';
 
 export const Product = () => {
   const dispatch = useAppDispatch();
-  const searchTerm = useAppSelector((state: any) => state.product.searchTerm);
-  const sort = useAppSelector((state: any) => state.product.sort);
-  const selectedModels = useAppSelector((state: any) => state.product.selectedModels);
-  const selectedBrands = useAppSelector((state: any) => state.product.selectedBrands);
-  const paginationPage = useAppSelector((state: any) => state.product.pagination);
+  const searchTerm = useAppSelector((state: { product: ProductState }) => state.product.searchTerm);
+  const sort = useAppSelector((state: { product: ProductState }) => state.product.sort);
+  const selectedModels = useAppSelector((state: { product: ProductState }) => state.product.selectedModels);
+  const selectedBrands = useAppSelector((state: { product: ProductState }) => state.product.selectedBrands);
+  const paginationPage = useAppSelector((state: { product: ProductState }) => state.product.pagination);
 
   const prevSearchTermRef = useRef<string>(searchTerm);
 

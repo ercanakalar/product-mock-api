@@ -10,12 +10,14 @@ import { Filter } from '../../components/filter/Filter';
 import { BasketCard } from '../../components/basket/BasketCard';
 import Checkout from '../../components/checkout/Checkout';
 
+import { ProductState } from '../../type/product-type';
+
 const ProductPage = () => {
   const dispatch = useAppDispatch();
-  const models = useAppSelector((state: any) => state.product.models);
-  const brands = useAppSelector((state: any) => state.product.brands);
-  const selectedModels = useAppSelector((state: any) => state.product.selectedModels);
-  const selectedBrands = useAppSelector((state: any) => state.product.selectedBrands);
+  const models = useAppSelector((state: { product: ProductState }) => state.product.models);
+  const brands = useAppSelector((state: { product: ProductState }) => state.product.brands);
+  const selectedModels = useAppSelector((state: { product: ProductState }) => state.product.selectedModels);
+  const selectedBrands = useAppSelector((state: { product: ProductState }) => state.product.selectedBrands);
 
   useGetFilterProductsQuery({});
 
