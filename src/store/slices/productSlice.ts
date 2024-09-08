@@ -12,6 +12,7 @@ const initialState: ProductState = {
   searchTerm: '',
   pagination: 1,
   totalProducts: 0,
+  productId: '',
 };
 
 const productSlice = createSlice({
@@ -55,10 +56,21 @@ const productSlice = createSlice({
     setPaginationPage: (state, action: PayloadAction<number>) => {
       state.pagination = action.payload;
     },
+    setProductId: (state, action: PayloadAction<string>) => {
+      state.productId = action.payload;
+    },
   },
 });
 
-export const { setBrands, setModels, setSort, setSelectedBrand, setSelectedModel, setSearchTerm, setPaginationPage } =
-  productSlice.actions;
+export const {
+  setBrands,
+  setModels,
+  setSort,
+  setSelectedBrand,
+  setSelectedModel,
+  setSearchTerm,
+  setPaginationPage,
+  setProductId,
+} = productSlice.actions;
 
 export default productSlice.reducer;

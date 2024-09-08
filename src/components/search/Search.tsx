@@ -7,7 +7,7 @@ export const Search = (props: {
   onChange: (value: string) => void;
 }) => {
   return (
-    <div className='relative h-full hidden lg:block lmd:block xl:block 2xl:block'>
+    <div className='relative h-full hidden md:block lg:block lmd:block xl:block 2xl:block'>
       <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
         <SearchIcon className='w-4 h-4 text-gray-500' />
       </span>

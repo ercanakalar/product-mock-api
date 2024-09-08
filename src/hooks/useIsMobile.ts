@@ -12,7 +12,6 @@ const useIsMobile = (mobileScreenSize = 768) => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const mediaListener = window?.matchMedia(`(max-width: ${mobileScreenSize}px)`);
-    // try catch used to fallback for browser compatibility
     try {
       mediaListener.addEventListener('change', checkIsMobile);
     } catch {

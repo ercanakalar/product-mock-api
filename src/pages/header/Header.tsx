@@ -18,13 +18,14 @@ export const Header = (props: LayoutProps) => {
   const dispatch = useAppDispatch();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isBasketOpen, setIsBasketOpen] = useState(false); // State for opening and closing the basket modal
+  const [isBasketOpen, setIsBasketOpen] = useState(false);
 
   const models = useAppSelector((state: { product: ProductState }) => state.product.models);
   const brands = useAppSelector((state: { product: ProductState }) => state.product.brands);
   const totalProducts = useAppSelector((state: { cart: CartState }) => state.cart.totalProducts);
   const selectedModels = useAppSelector((state: { product: ProductState }) => state.product.selectedModels);
   const selectedBrands = useAppSelector((state: { product: ProductState }) => state.product.selectedBrands);
+  const productId = useAppSelector((state: { product: ProductState }) => state.product.productId);
 
   const handleBrandChange = (brand: string) => {
     dispatch(setSelectedBrand(brand));
@@ -55,7 +56,7 @@ export const Header = (props: LayoutProps) => {
       <header className='flex justify-around bg-headerColor h-12 w-full'>
         <div className='flex gap-20 items-center'>
           <HeaderTitle />
-          <div className='h-full p-2 hidden sm:block'>
+          <div className='h-full p-2 hidden sm:block lg:block lmd:block'>
             <Search onChange={handleSearchChange} className='h-full' width='sm:w-68 lg:w-90 xl:w-96 2xl:w-96' />
           </div>
         </div>
@@ -64,14 +65,16 @@ export const Header = (props: LayoutProps) => {
           <Profile />
         </div>
       </header>
-      <div className='flex md:hidden lmd:hidden lg:hidden xl:hidden 2xl:hidden justify-evenly w-full divide-x'>
-        <button className='bg-gray-100 w-full py-4' onClick={toggleFilter}>
-          Filter
-        </button>
-        <button className='bg-gray-100 w-full py-4' onClick={toggleSort}>
-          Sort
-        </button>
-      </div>
+      {!productId && (
+        <div className='flex md:hidden lmd:hidden lg:hidden xl:hidden 2xl:hidden justify-evenly w-full divide-x'>
+          <button className='bg-gray-100 w-full py-4' onClick={toggleFilter}>
+            Filter
+          </button>
+          <button className='bg-gray-100 w-full py-4' onClick={toggleSort}>
+            Sort
+          </button>
+        </div>
+      )}
 
       {isFilterOpen && (
         <HeaderFilter
