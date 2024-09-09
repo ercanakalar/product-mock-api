@@ -22,7 +22,7 @@ const Checkout = () => {
       <div className='flex flex-col w-full'>
         <div className='relative flex gap-1 w-full items-center'>
           <p className='text-sm font-normal text-center'>Total Price:</p>
-          <label className='text- font-normal text-center text-cardPrice'>{convertCurrencyTr(price)}</label>
+          <p className='text- font-normal text-center text-cardPrice'>{convertCurrencyTr(price)}</p>
         </div>
         <div>
           <button className='w-full bg-button text-white rounded-md p-2 mt-4'>Checkout</button>
