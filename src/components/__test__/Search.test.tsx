@@ -1,8 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Search } from '../search/Search';
 
-jest.mock('../../assets/icons/search.svg', () => () => <svg data-testid='search-icon' />);
-
 describe('Search Component', () => {
   const mockOnChange = jest.fn();
 
@@ -31,10 +29,18 @@ describe('Search Component', () => {
   });
 
   test('sets the correct value for the input field', () => {
-    render(<Search className='custom-class' value='Initial Value' onChange={mockOnChange} />);
+    const { getByPlaceholderText } = render(
+      <Search
+        className='custom-class'
+        width='custom-class'
+        value='Initial Value'
+        onChange={mockOnChange}
+      />
+    );
 
-    const inputElement = screen.getByPlaceholderText('Search');
+    const inputElement = getByPlaceholderText('Search');
 
+    // Check if the input field has the correct value
     expect(inputElement).toHaveValue('Initial Value');
   });
 });
