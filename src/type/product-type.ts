@@ -1,4 +1,4 @@
-export type Product = {
+export type ProductType = {
   createdAt: string;
   name: string;
   image: string;
@@ -14,7 +14,7 @@ export interface ProductState {
   models: Set<string>;
   selectedBrands: Set<string>;
   selectedModels: Set<string>;
-  products: Product[];
+  products: ProductType[];
   sort: string;
   searchTerm: string;
   pagination: number;

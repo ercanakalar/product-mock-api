@@ -38,12 +38,12 @@ const productSlice = createSlice({
       }
     },
     setBrands: (state, action: PayloadAction<string[]>) => {
-      action.payload.forEach((brand) => {
+      action.payload?.forEach((brand) => {
         state.brands.add(brand);
       });
     },
     setModels: (state, action: PayloadAction<string[]>) => {
-      action.payload.forEach((model) => {
+      action.payload?.forEach((model) => {
         state.models.add(model);
       });
     },

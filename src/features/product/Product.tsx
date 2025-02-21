@@ -2,42 +2,37 @@ import { Suspense, useEffect, useRef } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 
-import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { useGetProductsQuery } from '../../store/services/productService';
+import { useAppDispatch } from '../../store/hook';
 import { setPaginationPage } from '../../store/slices/productSlice';
 
 import ProductCard from '../../components/card/ProductCard';
 import LoadingSpinner from '../../components/loading/LoadingSpinner';
 import Pagination from '../../components/pagination/Pagination';
-import { ProductState } from '../../type/product-type';
+import { ProductType, ProductState } from '../../type/product-type';
+import { itemsPerPage } from '../../constants/constantValues';
 
-export const Product = () => {
+export const Product = (props: {
+  productSelector: ProductState;
+  products: ProductType[] | undefined;
+  isLoading: boolean;
+  error: FetchBaseQueryError | SerializedError | undefined;
+}) => {
+  const { searchTerm, pagination } = props.productSelector;
+  const { products, isLoading, error } = props;
   const dispatch = useAppDispatch();
-  const searchTerm = useAppSelector((state: { product: ProductState }) => state.product.searchTerm);
-  const sort = useAppSelector((state: { product: ProductState }) => state.product.sort);
-  const selectedModels = useAppSelector((state: { product: ProductState }) => state.product.selectedModels);
-  const selectedBrands = useAppSelector((state: { product: ProductState }) => state.product.selectedBrands);
-  const paginationPage = useAppSelector((state: { product: ProductState }) => state.product.pagination);
 
   const prevSearchTermRef = useRef<string>(searchTerm);
 
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useGetProductsQuery({
-    sort,
-    brands: Array.from(selectedBrands),
-    models: Array.from(selectedModels),
-  });
-
-  const itemsPerPage = 12;
-
-  const filteredProducts = products?.filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredProducts = products?.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const totalPages = Math.ceil((filteredProducts?.length || 0) / itemsPerPage);
 
-  const currentProducts = filteredProducts?.slice((paginationPage - 1) * itemsPerPage, paginationPage * itemsPerPage);
+  const currentProducts = filteredProducts?.slice(
+    (pagination - 1) * itemsPerPage,
+    pagination * itemsPerPage
+  );
 
   const handlePageChange = (page: number) => {
     dispatch(setPaginationPage(page));
@@ -50,7 +45,9 @@ export const Product = () => {
     }
   }, [searchTerm, dispatch]);
 
-  const getErrorMessage = (error: FetchBaseQueryError | SerializedError): string => {
+  const getErrorMessage = (
+    error: FetchBaseQueryError | SerializedError
+  ): string => {
     if ('status' in error) {
       const err = error as FetchBaseQueryError;
       return `Error ${err.status}: ${
@@ -76,7 +73,9 @@ export const Product = () => {
   if (error) {
     return (
       <div className='col-span-4 w-2/4 pt-6'>
-        <div className='text-center col-span-full'>{getErrorMessage(error)}</div>
+        <div className='text-center col-span-full'>
+          {getErrorMessage(error)}
+        </div>
       </div>
     );
   }
@@ -95,7 +94,11 @@ export const Product = () => {
         )}
       </div>
       {totalPages > 1 && (
-        <Pagination currentPage={paginationPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        <Pagination
+          currentPage={pagination}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   );
