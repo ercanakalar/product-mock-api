@@ -10,21 +10,23 @@ export const Basket = () => {
   const price = useAppSelector((state: { cart: CartState }) => state.cart.totalPrice);
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(1024);
 
   const openBasket = () => {
+    console.log('awdw');
+    
     setIsBasketOpen(!isBasketOpen);
   };
 
   return (
     <div className='relative'>
-      <div className='flex items-center justify-center gap-2 lg:cursor-pointer' onClick={openBasket}>
+      <div className='flex items-center justify-center gap-2 md:cursor-pointer lg:cursor-default' onClick={openBasket}>
         <span>
           <BasketIcon className='w-6 h-6 text-gray-500' />
         </span>
         <p className='text-base font-normal text-headerTextColor'> {convertCurrencyTr(price)} </p>
       </div>
-      {isBasketOpen && isMobile && (
+      {(isBasketOpen && isMobile) && (
         <div className='absolute top-8 -left-4 w-max'>
           <BasketCard />
         </div>

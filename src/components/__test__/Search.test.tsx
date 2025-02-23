@@ -40,7 +40,6 @@ describe('Search Component', () => {
 
     const inputElement = getByPlaceholderText('Search');
 
-    // Check if the input field has the correct value
     expect(inputElement).toHaveValue('Initial Value');
   });
 });

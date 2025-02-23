@@ -11,7 +11,7 @@ export const Filter = (props: {
   selectedFilter?: Set<string>;
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-
+  
   const filtersArray = props.filter ? Array.from(props.filter) : [];
   const filteredArray = filtersArray.filter((item) =>
     item.toLowerCase().includes(searchTerm.toLowerCase())

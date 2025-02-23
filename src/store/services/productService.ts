@@ -1,9 +1,8 @@
 import createApi from '../middlewares/createApi';
 import { baseQuery } from '../bases/baseQuery';
 import { ProductType } from '../../type/product-type';
-import { setBrands, setModels } from '../slices/productSlice';
-import store from '../index';
 import { sortOptionsValue } from '../../constants/sortConstant';
+import transformErrorResponse from '../bases/transformErrorResponse';
 
 export const productService = createApi({
   reducerPath: 'productService',
@@ -38,14 +37,8 @@ export const productService = createApi({
       transformResponse: (response: ProductType[]) => {
         return response;
       },
-      transformErrorResponse: (meta, error) => {
-        return {
-          error: error?.response?.status,
-          message:
-            error?.response?.statusText ||
-            'An error occurred while fetching products.',
-        };
-      },
+      transformErrorResponse: (error, meta) =>
+        transformErrorResponse(error, meta),
     }),
     getProductById: builder.query<ProductType, string>({
       query: (id) => {
@@ -57,7 +50,12 @@ export const productService = createApi({
       transformResponse: (response: ProductType) => {
         return response;
       },
-      transformErrorResponse: (response) => {
+      transformErrorResponse: (error, meta) =>
+        transformErrorResponse(error, meta),
+    }),
+    getAllFilters: builder.query<any, void>({
+      query: () => '/',
+      transformResponse: (response: ProductType[]) => {
         return response;
       },
     }),

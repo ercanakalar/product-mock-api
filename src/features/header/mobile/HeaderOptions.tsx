@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
+
 import { ReactComponent as HomeIcon } from '../../../assets/icons/home.svg';
 import { ReactComponent as BasketIcon } from '../../../assets/icons/basket.svg';
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/profile-black.svg';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/search.svg';
 import { useAppDispatch, useAppSelector } from '../../../store/hook';
-import { CartState } from '../../../type/cart-type';
+
 import { getTotalCart } from '../../../store/slices/cartSlice';
-import { useEffect } from 'react';
+
+import { CartState } from '../../../type/cart-type';
 
 const HeaderOptions = (props: { totalProducts: number; toggleBasket: () => void }) => {
   const dispatch = useAppDispatch();

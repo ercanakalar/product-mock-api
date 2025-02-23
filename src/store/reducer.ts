@@ -4,9 +4,11 @@ import productService from './services/productService';
 import productSlice from './slices/productSlice';
 import cartSlice from './slices/cartSlice';
 
-const rootReducers = {
+const reducers = {
   product: productSlice,
   cart: cartSlice,
   [productService.reducerPath]: productService.reducer,
 };
-export default combineReducers(rootReducers);
+const rootReducer = combineReducers(reducers);
+export default rootReducer;
+export type RootReducer = typeof rootReducer;

@@ -1,37 +1,43 @@
 import { Suspense, useEffect, useRef } from 'react';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
 
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 import { setPaginationPage } from '../../store/slices/productSlice';
 
 import ProductCard from '../../components/card/ProductCard';
 import LoadingSpinner from '../../components/loading/LoadingSpinner';
 import Pagination from '../../components/pagination/Pagination';
-import { ProductType, ProductState } from '../../type/product-type';
+import { ProductState } from '../../type/product-type';
 import { itemsPerPage } from '../../constants/constantValues';
+import { useGetProductsQuery } from '../../store/services/productService';
+import { getErrorMessage } from '../../constants/parseError';
 
-export const Product = (props: {
-  productSelector: ProductState;
-  products: ProductType[] | undefined;
-  isLoading: boolean;
-  error: FetchBaseQueryError | SerializedError | undefined;
-}) => {
-  const { searchTerm, pagination } = props.productSelector;
-  const { products, isLoading, error } = props;
+export const Product = () => {
   const dispatch = useAppDispatch();
+  const productSelector = useAppSelector(
+    (state: { product: ProductState }) => state.product
+  );
 
-  const prevSearchTermRef = useRef<string>(searchTerm);
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useGetProductsQuery({
+    sort: productSelector.sort,
+    brands: Array.from(productSelector.selectedBrands),
+    models: Array.from(productSelector.selectedModels),
+  });
+
+  const prevSearchTermRef = useRef<string>(productSelector.searchTerm);
 
   const filteredProducts = products?.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    product.name.toLowerCase().includes(productSelector.searchTerm.toLowerCase())
   );
 
   const totalPages = Math.ceil((filteredProducts?.length || 0) / itemsPerPage);
 
   const currentProducts = filteredProducts?.slice(
-    (pagination - 1) * itemsPerPage,
-    pagination * itemsPerPage
+    (productSelector.pagination - 1) * itemsPerPage,
+    productSelector.pagination * itemsPerPage
   );
 
   const handlePageChange = (page: number) => {
@@ -39,27 +45,11 @@ export const Product = (props: {
   };
 
   useEffect(() => {
-    if (prevSearchTermRef.current !== searchTerm) {
+    if (prevSearchTermRef.current !== productSelector.searchTerm) {
       dispatch(setPaginationPage(1));
-      prevSearchTermRef.current = searchTerm;
+      prevSearchTermRef.current = productSelector.searchTerm;
     }
-  }, [searchTerm, dispatch]);
-
-  const getErrorMessage = (
-    error: FetchBaseQueryError | SerializedError
-  ): string => {
-    if ('status' in error) {
-      const err = error as FetchBaseQueryError;
-      return `Error ${err.status}: ${
-        err.data && typeof err.data === 'object' && 'message' in err.data
-          ? (err.data as any).message
-          : 'An error occurred while fetching products.'
-      }`;
-    } else if ('message' in error) {
-      return error.message || 'An unknown error occurred.';
-    }
-    return 'An unknown error occurred.';
-  };
+  }, [productSelector.searchTerm, dispatch]);
 
   if (isLoading)
     return (
@@ -95,7 +85,7 @@ export const Product = (props: {
       </div>
       {totalPages > 1 && (
         <Pagination
-          currentPage={pagination}
+          currentPage={productSelector.pagination}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />

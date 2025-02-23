@@ -1,18 +1,16 @@
-import { useEffect } from 'react';
 import { SortBy } from '../../../components/sort/SortBy';
 import { Filter } from '../../../components/filter/Filter';
 import { useAppDispatch, useAppSelector } from '../../../store/hook';
 import { ProductState } from '../../../type/product-type';
-import { setBrands, setModels, setSelectedBrand, setSelectedModel, setSort } from '../../../store/slices/productSlice';
+import { setSelectedBrand, setSelectedModel, setSort } from '../../../store/slices/productSlice';
 
 const FilterProduct = () => {
   const dispatch = useAppDispatch();
-  const productSelector = useAppSelector(
-    (state: { product: ProductState }) => state.product
-  );
-
-  
-  console.log(productSelector.brands);
+  const models = useAppSelector((state: { product: ProductState }) => state.product.models);
+  const brands = useAppSelector((state: { product: ProductState }) => state.product.brands);
+  const sort = useAppSelector((state: { product: ProductState }) => state.product.sort);
+  const selectedBrands = useAppSelector((state: { product: ProductState }) => state.product.selectedBrands);
+  const selectedModels = useAppSelector((state: { product: ProductState }) => state.product.selectedModels);
 
   const handleBrandChange = (brand: string) => {
     dispatch(setSelectedBrand(brand));
@@ -31,21 +29,21 @@ const FilterProduct = () => {
       <SortBy
         className='lg:ml-0 2xl:ml-auto'
         title='Sort By'
-        selectedSort={productSelector.sort}
+        selectedSort={sort}
         handleSortChange={handleSortChange}
       />
       <Filter
         className='lg:ml-0 2xl:ml-auto'
         title='Brands'
-        selectedFilter={productSelector.selectedBrands}
-        filter={productSelector.brands}
+        selectedFilter={selectedBrands}
+        filter={brands}
         onChange={handleBrandChange}
       />
       <Filter
         className='lg:ml-0 2xl:ml-auto'
         title='Models'
-        selectedFilter={productSelector.selectedModels}
-        filter={productSelector.models}
+        selectedFilter={selectedModels}
+        filter={models}
         onChange={handleModelChange}
       />
     </div>
