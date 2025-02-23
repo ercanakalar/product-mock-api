@@ -9,12 +9,19 @@ import { useAppDispatch, useAppSelector } from '../../../store/hook';
 import { getTotalCart } from '../../../store/slices/cartSlice';
 
 import { CartState } from '../../../type/cart-type';
+import { ProductState } from '../../../type/product-type';
+import { setBasketStatus } from '../../../store/slices/productSlice';
 
-const HeaderOptions = (props: { totalProducts: number; toggleBasket: () => void }) => {
+const HeaderOptions = () => {
   const dispatch = useAppDispatch();
 
   const totalProducts = useAppSelector((state: { cart: CartState }) => state.cart.totalProducts);
   const cartItems = useAppSelector((state: { cart: CartState }) => state.cart.items);
+  const basketStatus = useAppSelector((state: { product: ProductState }) => state.product.basketStatus);
+
+  const toggleBasket = () => {
+    dispatch(setBasketStatus(!basketStatus));
+  };
 
   useEffect(() => {
     dispatch(getTotalCart());
@@ -28,7 +35,7 @@ const HeaderOptions = (props: { totalProducts: number; toggleBasket: () => void 
       <button className='flex flex-col items-center p-4'>
         <SearchIcon className='w-5 h-5' fill='black' />
       </button>
-      <button className='flex flex-col items-center p-4' onClick={props.toggleBasket}>
+      <button className='flex flex-col items-center p-4' onClick={toggleBasket}>
         <div className='relative'>
           <p className='absolute left-2 -top-2 text-xs text-red-600'>{totalProducts}</p>
         </div>

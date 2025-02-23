@@ -25,6 +25,10 @@ describe('productSlice reducer', () => {
     pagination: 1,
     totalProducts: 0,
     productId: '',
+    filterStatus: false,
+    sortStatus: false,
+    basketStatus: false,
+    applyFilterStatus: false,
   };
 
   test('should return the initial state', () => {
@@ -78,4 +82,14 @@ describe('productSlice reducer', () => {
     const nextState = productReducer(initialState, setProductId('12345'));
     expect(nextState.productId).toBe('12345');
   });
+
+  test('should handle unknown action type', () => {
+    expect(productReducer(initialState, { type: 'unknown' })).toEqual(initialState);
+  });
+
+  test('should handle unknown action type with initial state', () => {
+    expect(productReducer(undefined, { type: 'unknown' })).toEqual(initialState);
+  });
+
+
 });

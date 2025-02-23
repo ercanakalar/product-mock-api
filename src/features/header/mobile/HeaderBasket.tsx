@@ -1,12 +1,21 @@
 import { BasketCard } from '../../../components/basket/BasketCard';
 import Checkout from '../../../components/checkout/Checkout';
+import { useAppDispatch, useAppSelector } from '../../../store/hook';
+import { setBasketStatus } from '../../../store/slices/productSlice';
+import { ProductState } from '../../../type/product-type';
 
-const HeaderBasket = (props: { toggleBasket: () => void; }) => {
-  return (
+const HeaderBasket = () => {
+  const dispatch = useAppDispatch();
+  const product = useAppSelector((state: { product: ProductState }) => state.product);
+
+  const toggleBasket = () => {
+    dispatch(setBasketStatus(!product.basketStatus));
+  };
+  return (product.basketStatus ? (
     <div className='fixed inset-0 z-50 bg-white flex flex-col h-full overflow-y-auto'>
       <div className='flex justify-between p-4 border-b border-gray-200'>
         <h2 className='text-xl font-semibold'>Basket</h2>
-        <button onClick={props.toggleBasket} className='text-gray-500 text-xl'>
+        <button onClick={toggleBasket} className='text-gray-500 text-xl'>
           &#x2715;
         </button>
       </div>
@@ -15,7 +24,7 @@ const HeaderBasket = (props: { toggleBasket: () => void; }) => {
         <BasketCard />
         <Checkout />
       </div>
-    </div>
+    </div>) : <></>
   );
 };
 

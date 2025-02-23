@@ -4,10 +4,10 @@ import { setSort } from '../../../store/slices/productSlice';
 import { SortBy } from '../../../components/sort/SortBy';
 import { ProductState } from '../../../type/product-type';
 
-const HeaderSort = (props: { setIsSortOpen: (isOpen: boolean) => void; toggleSort: () => void }) => {
+const HeaderSort = (props: { toggleSort: () => void }) => {
   const dispatch = useAppDispatch();
-  const currentSort = useAppSelector((state: { product: ProductState }) => state.product.sort);
-  const [localSort, setLocalSort] = useState(currentSort);
+  const product = useAppSelector((state: { product: ProductState }) => state.product);
+  const [localSort, setLocalSort] = useState(product.sort);
 
   const handleSortChange = (value: string) => {
     setLocalSort(value);
@@ -15,10 +15,9 @@ const HeaderSort = (props: { setIsSortOpen: (isOpen: boolean) => void; toggleSor
 
   const applySort = () => {
     dispatch(setSort(localSort));
-    props.setIsSortOpen(false);
   };
 
-  return (
+  return (product.sortStatus ? (
     <div className='fixed inset-0 z-50 bg-white flex flex-col h-full overflow-y-auto'>
       <div className='flex justify-between p-4 border-b border-gray-200'>
         <h2 className='text-xl font-semibold'>Sort</h2>
@@ -38,7 +37,7 @@ const HeaderSort = (props: { setIsSortOpen: (isOpen: boolean) => void; toggleSor
           Apply
         </button>
       </div>
-    </div>
+    </div>) : <></>
   );
 };
 

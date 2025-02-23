@@ -1,37 +1,26 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../store/hook';
-import { setSearchTerm, setSelectedBrand, setSelectedModel } from '../../store/slices/productSlice';
+import { setFilterStatus, setSearchTerm, setSortStatus } from '../../store/slices/productSlice';
+
 import { Search } from '../../components/search/Search';
 import { Profile } from '../../features/header/profile/Profile';
 import { Basket } from '../../features/header/basket/Basket';
 import { HeaderTitle } from '../../features/header/HeaderTitle';
-import { LayoutProps } from '../../type/children-type';
-import { ProductState } from '../../type/product-type';
-import { CartState } from '../../type/cart-type';
 import HeaderOptions from '../../features/header/mobile/HeaderOptions';
 import HeaderFilter from '../../features/header/mobile/HeaderFilter';
 import HeaderSort from '../../features/header/mobile/HeaderSort';
 import HeaderBasket from '../../features/header/mobile/HeaderBasket';
+
+import { LayoutProps } from '../../type/children-type';
+import { ProductState } from '../../type/product-type';
+
 import { throttle } from '../../utils/throttle';
-import { shallowEqual } from 'react-redux';
 
 export const Header = (props: LayoutProps) => {
   const dispatch = useAppDispatch();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isBasketOpen, setIsBasketOpen] = useState(false);
 
-  
-  const totalProducts = useAppSelector((state: { cart: CartState }) => state.cart.totalProducts, shallowEqual);
-  const productId = useAppSelector((state: { product: ProductState }) => state.product.productId);
-
-  const handleBrandChange = (brand: string) => {
-    dispatch(setSelectedBrand(brand));
-  };
-
-  const handleModelChange = (model: string) => {
-    dispatch(setSelectedModel(model));
-  };
+  const product = useAppSelector((state: { product: ProductState }) => state.product);
 
   const throttledSearch = useMemo(
     () => throttle((term: string) => dispatch(setSearchTerm(term)), 500),
@@ -43,15 +32,11 @@ export const Header = (props: LayoutProps) => {
   };
 
   const toggleFilter = () => {
-    setIsFilterOpen(!isFilterOpen);
+    dispatch(setFilterStatus(!product.filterStatus));
   };
 
   const toggleSort = () => {
-    setIsSortOpen(!isSortOpen);
-  };
-
-  const toggleBasket = () => {
-    setIsBasketOpen(!isBasketOpen);
+    dispatch(setSortStatus(!product.sortStatus));
   };
 
   return (
@@ -72,7 +57,7 @@ export const Header = (props: LayoutProps) => {
           <Profile />
         </div>
       </header>
-      {!productId && (
+      {!product.productId && (
         <div className="flex md:hidden lmd:hidden lg:hidden xl:hidden 2xl:hidden justify-evenly w-full divide-x">
           <button className="bg-gray-100 w-full py-4" onClick={toggleFilter}>
             Filter
@@ -83,16 +68,12 @@ export const Header = (props: LayoutProps) => {
         </div>
       )}
 
-      {isFilterOpen && (
-        <HeaderFilter
-          handleBrandChange={handleBrandChange}
-          handleModelChange={handleModelChange}
-          toggleFilter={toggleFilter}
-        />
-      )}
-      {isSortOpen && <HeaderSort setIsSortOpen={setIsSortOpen} toggleSort={toggleSort} />}
-      {isBasketOpen && <HeaderBasket toggleBasket={toggleBasket} />}
-      <HeaderOptions totalProducts={totalProducts} toggleBasket={toggleBasket} />
+      <HeaderFilter
+        toggleFilter={toggleFilter}
+      />
+      <HeaderSort toggleSort={toggleSort} />
+      <HeaderBasket />
+      <HeaderOptions />
 
       {props.children}
     </>

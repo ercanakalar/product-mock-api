@@ -20,4 +20,8 @@ export interface ProductState {
   pagination: number;
   totalProducts: number;
   productId: string;
+  filterStatus: boolean;
+  sortStatus: boolean;
+  basketStatus: boolean;
+  applyFilterStatus: boolean;
 }

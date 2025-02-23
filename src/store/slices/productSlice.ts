@@ -13,6 +13,10 @@ const initialState: ProductState = {
   pagination: 1,
   totalProducts: 0,
   productId: '',
+  filterStatus: false,
+  sortStatus: false,
+  basketStatus: false,
+  applyFilterStatus: false,
 };
 
 const productSlice = createSlice({
@@ -59,6 +63,18 @@ const productSlice = createSlice({
     setProductId: (state, action: PayloadAction<string>) => {
       state.productId = action.payload;
     },
+    setFilterStatus: (state, action: PayloadAction<boolean>) => {
+      state.filterStatus = action.payload;
+    },
+    setSortStatus: (state, action: PayloadAction<boolean>) => {
+      state.sortStatus = action.payload;
+    },
+    setBasketStatus: (state, action: PayloadAction<boolean>) => {
+      state.basketStatus = action.payload;
+    },
+    setApplyFilterStatus: (state, action: PayloadAction<boolean>) => {
+      state.applyFilterStatus = action.payload;
+    },
   },
 });
 
@@ -71,6 +87,10 @@ export const {
   setSearchTerm,
   setPaginationPage,
   setProductId,
+  setFilterStatus,
+  setSortStatus,
+  setBasketStatus,
+  setApplyFilterStatus
 } = productSlice.actions;
 
 export default productSlice.reducer;

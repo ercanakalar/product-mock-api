@@ -24,6 +24,10 @@ describe('productSlice reducer', () => {
     pagination: 1,
     totalProducts: 0,
     productId: '',
+    basketStatus: false,
+    filterStatus: false,
+    sortStatus: false,
+    applyFilterStatus: false,
   };
 
   test('should return the initial state', () => {
