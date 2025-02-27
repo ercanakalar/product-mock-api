@@ -15,9 +15,16 @@ const ProductDetail = () => {
     dispatch(setProductId(id || ''));
   }, [dispatch, id]);
 
-  const { data: product, isLoading, error } = useGetProductByIdQuery(id || '');
+  const {
+    currentData: product,
+    isLoading,
+    error,
+  } = useGetProductByIdQuery(id || '');
 
-  if (isLoading) return <div className='flex justify-center items-center h-full'>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className='flex justify-center items-center h-full'>Loading...</div>
+    );
 
   if (error || !product) return <p>Product not found.</p>;
 
@@ -37,10 +44,16 @@ const ProductDetail = () => {
     <div className='flex justify-center items-center w-full md:w-3/4 2xl:w-3/4 pt-6'>
       <CardBase width='w-full ml-auto md:w-5/6 lg:md:w-5/6'>
         <div className='flex flex-col xl:flex-row gap-4'>
-          <img className='w-full max-h-96 object-cover' alt={product.name} src={product.image} />
+          <img
+            className='w-full max-h-96 object-cover'
+            alt={product.name}
+            src={product.image}
+          />
           <div className='flex flex-col justify-between w-full lg:w-full'>
             <div className='flex flex-col mb-4'>
-              <h3 className='text-xl md:text-2xl font-medium'>{product.name}</h3>
+              <h3 className='text-xl md:text-2xl font-medium'>
+                {product.name}
+              </h3>
               <p className='text-lg md:text-2xl font-normal text-cardPrice'>
                 {convertCurrencyTr(Number(product.price))}
               </p>
@@ -52,7 +65,9 @@ const ProductDetail = () => {
               >
                 Add to Cart
               </button>
-              <p className='text-sm md:text-sm lg:text-sm font-medium'>{product.description}</p>
+              <p className='text-sm md:text-sm lg:text-sm font-medium'>
+                {product.description}
+              </p>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import productService from '../services/productService';
 
 const filterMiddleware: Middleware<{}, RootState> =
   (store) => (next) => (action: any) => {
-    if (productService.endpoints.getAllFilters.matchFulfilled(action)) {
+    if (productService.endpoints.getProducts.matchFulfilled(action)) {
       store.dispatch(
         setModels(action?.payload?.map((data: ProductType) => data.model))!
       );

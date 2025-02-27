@@ -10,13 +10,10 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      .concat(productService.middleware)
       .concat(filterMiddleware)
-      .prepend(productService.middleware),
+      .concat(productService.middleware),
 });
 setupListeners(store.dispatch);
-
-store.dispatch(productService.endpoints.getAllFilters.initiate());
 
 export type RootState = ReturnType<typeof rootReducer>;
 

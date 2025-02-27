@@ -18,14 +18,15 @@ export const Product = () => {
   );
 
   const {
-    data: products,
     isLoading,
     error,
+    currentData: products
   } = useGetProductsQuery({
     sort: productSelector.sort,
     brands: Array.from(productSelector.selectedBrands),
     models: Array.from(productSelector.selectedModels),
   });
+
 
   const prevSearchTermRef = useRef<string>(productSelector.searchTerm);
 

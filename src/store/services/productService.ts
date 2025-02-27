@@ -53,12 +53,6 @@ export const productService = createApi({
       transformErrorResponse: (error, meta) =>
         transformErrorResponse(error, meta),
     }),
-    getAllFilters: builder.query<any, void>({
-      query: () => '/',
-      transformResponse: (response: ProductType[]) => {
-        return response;
-      },
-    }),
   }),
 });
 
