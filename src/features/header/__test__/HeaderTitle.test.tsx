@@ -34,7 +34,7 @@ describe('HeaderTitle Component', () => {
       </Provider>
     );
 
-    const titleElement = screen.getByText('Eteration');
+    const titleElement = screen.getByText('Company');
     expect(titleElement).toBeInTheDocument();
 
     fireEvent.click(titleElement);

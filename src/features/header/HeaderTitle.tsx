@@ -12,7 +12,7 @@ export const HeaderTitle = () => {
   };
   return (
     <h1 onClick={homeBack} className=' lmd:font-extrabold lmd:text-2xl text-center text-headerTextColor cursor-pointer'>
-      Eteration
+      Company
     </h1>
   );
 };
