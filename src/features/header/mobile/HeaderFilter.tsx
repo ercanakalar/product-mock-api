@@ -1,27 +1,51 @@
-import { setApplyFilterStatus, setFilterStatus, setSelectedBrand, setSelectedModel } from '../../../store/slices/productSlice';
+import { setApplyFilterStatus, setFilterStatus, setSelectedBrandForMobile, setSelectedModelForMobile } from '../../../store/slices/productSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hook';
 
 import { Filter } from '../../../components/filter/Filter';
 
 import { ProductState } from '../../../type/product-type';
+import { useState } from 'react';
+import useIsMobile from '../../../hooks/useIsMobile';
 
 const HeaderFilter = (props: {
   toggleFilter: () => void;
 }) => {
   const dispatch = useAppDispatch();
+  const isMobile = useIsMobile();
 
   const product = useAppSelector((state: { product: ProductState }) => state.product);
+  const [selectedModels, setSelectedModels] = useState<Set<string>>(new Set());
+  const [selectedBrands, setSelectedBrands] = useState<Set<string>>(new Set());
 
   const handleBrandChange = (brand: string) => {
-    dispatch(setSelectedBrand(brand));
+    setSelectedBrands((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(brand)) {
+        newSet.delete(brand);
+      } else {
+        newSet.add(brand);
+      }
+      return newSet;
+    }
+    );
   };
 
   const handleModelChange = (model: string) => {
-    dispatch(setSelectedModel(model));
+    setSelectedModels((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(model)) {
+        newSet.delete(model);
+      } else {
+        newSet.add(model);
+      }
+      return newSet;
+    });
   };
 
   const applyFilter = () => {
-    dispatch(setFilterStatus(!product.filterStatus))
+    dispatch(setSelectedBrandForMobile(selectedBrands));
+    dispatch(setSelectedModelForMobile(selectedModels));
+    dispatch(setFilterStatus(false));
     dispatch(setApplyFilterStatus(true))
   }
 
@@ -39,14 +63,14 @@ const HeaderFilter = (props: {
           <Filter
             className='lg:ml-0 2xl:ml-auto'
             title='Brands'
-            selectedFilter={product.selectedBrands}
+            selectedFilter={isMobile ? selectedBrands : product.selectedBrands}
             filter={product.brands}
             onChange={handleBrandChange}
           />
           <Filter
             className='lg:ml-0 2xl:ml-auto'
             title='Models'
-            selectedFilter={product.selectedModels}
+            selectedFilter={isMobile ? selectedModels : product.selectedModels}
             filter={product.models}
             onChange={handleModelChange}
           />

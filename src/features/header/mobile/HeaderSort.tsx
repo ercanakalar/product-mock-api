@@ -7,7 +7,8 @@ import { ProductState } from '../../../type/product-type';
 const HeaderSort = (props: { toggleSort: () => void }) => {
   const dispatch = useAppDispatch();
   const product = useAppSelector((state: { product: ProductState }) => state.product);
-  const [localSort, setLocalSort] = useState(product.sort);
+
+  const [localSort, setLocalSort] = useState('');
 
   const handleSortChange = (value: string) => {
     setLocalSort(value);
@@ -15,9 +16,10 @@ const HeaderSort = (props: { toggleSort: () => void }) => {
 
   const applySort = () => {
     dispatch(setSort(localSort));
+    props.toggleSort();
   };
 
-  return (product.sortStatus ? (
+  return product.sortStatus ? (
     <div className='fixed inset-0 z-50 bg-white flex flex-col h-full overflow-y-auto'>
       <div className='flex justify-between p-4 border-b border-gray-200'>
         <h2 className='text-xl font-semibold'>Sort</h2>
@@ -33,12 +35,15 @@ const HeaderSort = (props: { toggleSort: () => void }) => {
           selectedSort={localSort}
           handleSortChange={handleSortChange}
         />
-        <button onClick={applySort} className='bg-blue-500 text-white py-2 rounded mt-4'>
+        <button
+          onClick={applySort}
+          className='bg-blue-500 text-white py-2 rounded mt-4'
+        >
           Apply
         </button>
       </div>
-    </div>) : <></>
-  );
+    </div>
+  ) : null;
 };
 
 export default HeaderSort;

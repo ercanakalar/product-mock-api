@@ -19,6 +19,8 @@ describe('productSlice reducer', () => {
     models: new Set(),
     selectedBrands: new Set(),
     selectedModels: new Set(),
+    selectedBrandsForMobile: new Set(),
+    selectedModelsForMobile: new Set(),
     products: [],
     sort: '',
     searchTerm: '',

@@ -10,23 +10,24 @@ import { ProductState } from '../../type/product-type';
 import { itemsPerPage } from '../../constants/constantValues';
 import { useGetProductsQuery } from '../../store/services/productService';
 import { getErrorMessage } from '../../constants/parseError';
+import useIsMobile from '../../hooks/useIsMobile';
 
 export const Product = () => {
   const dispatch = useAppDispatch();
   const productSelector = useAppSelector(
     (state: { product: ProductState }) => state.product
   );
+  const isMobile = useIsMobile();
 
   const {
+    data: products,
     isLoading,
     error,
-    currentData: products
   } = useGetProductsQuery({
     sort: productSelector.sort,
-    brands: Array.from(productSelector.selectedBrands),
-    models: Array.from(productSelector.selectedModels),
+    brands: isMobile ? Array.from(productSelector.selectedBrandsForMobile) : Array.from(productSelector.selectedBrands),
+    models: isMobile ? Array.from(productSelector.selectedModelsForMobile) : Array.from(productSelector.selectedModels),
   });
-
 
   const prevSearchTermRef = useRef<string>(productSelector.searchTerm);
 
@@ -74,15 +75,12 @@ export const Product = () => {
   return (
     <div className='cal-span-2 lg:col-span-3 2xl:col-span-4 w-full md:w-3/4 xl:w-2/4 2xl:w-2/4 pt-6 mb-6'>
       <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 md:gap-1 gap-4 justify-items-center'>
-        {currentProducts?.length ? (
-          currentProducts.map((product) => (
+        {
+          currentProducts?.map((product) => (
             <Suspense key={product.id} fallback={<LoadingSpinner />}>
               <ProductCard product={product} />
             </Suspense>
-          ))
-        ) : (
-          <div className='text-center col-span-full'>No products found</div>
-        )}
+          ))}
       </div>
       {totalPages > 1 && (
         <Pagination

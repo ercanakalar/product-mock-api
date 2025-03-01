@@ -7,6 +7,10 @@ export const SortBy = (props: {
   selectedSort?: string;
   handleSortChange: (value: string) => void;
 }) => {
+  const onChange = (value: string) => {
+    props.handleSortChange(value);
+  };
+
   return (
     <CardBase position={props.className} title={props.title} width='w-auto lmd:w-60 lg:w-60 xl:w-60 2xl:w-60'>
       <div className='flex flex-col gap-2 pt-2 text-xs lg:text-base lmd:text-base xl:text-base 2xl:text-base'>
@@ -19,7 +23,7 @@ export const SortBy = (props: {
               value={filter}
               className='h-4 w-4'
               checked={props.selectedSort === filter}
-              onChange={() => props?.handleSortChange(filter)}
+              onChange={() => onChange(filter)}
             />
             <label htmlFor={filter} className='cursor-pointer'>
               {filter}

@@ -7,6 +7,8 @@ const initialState: ProductState = {
   models: new Set(),
   selectedBrands: new Set(),
   selectedModels: new Set(),
+  selectedBrandsForMobile: new Set(),
+  selectedModelsForMobile: new Set(),
   products: [],
   sort: '',
   searchTerm: '',
@@ -75,6 +77,18 @@ const productSlice = createSlice({
     setApplyFilterStatus: (state, action: PayloadAction<boolean>) => {
       state.applyFilterStatus = action.payload;
     },
+    setSelectedBrandForMobile: (state, action: PayloadAction<Set<string>>) => {
+      state.selectedBrandsForMobile.clear();
+      action.payload.forEach((brand) =>
+        state.selectedBrandsForMobile.add(brand)
+      );
+    },
+    setSelectedModelForMobile: (state, action: PayloadAction<Set<string>>) => {
+      state.selectedModelsForMobile.clear();
+      action.payload.forEach((model) =>
+        state.selectedModelsForMobile.add(model)
+      );
+    },
   },
 });
 
@@ -90,7 +104,9 @@ export const {
   setFilterStatus,
   setSortStatus,
   setBasketStatus,
-  setApplyFilterStatus
+  setApplyFilterStatus,
+  setSelectedBrandForMobile,
+  setSelectedModelForMobile,
 } = productSlice.actions;
 
 export default productSlice.reducer;
