@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hook';
 import { setSort } from '../../../store/slices/productSlice';
@@ -7,9 +7,11 @@ import { ProductState } from '../../../type/product-type';
 
 const HeaderSort = (props: { toggleSort: () => void }) => {
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state: { product: ProductState }) => state.product);
+  const product = useAppSelector(
+    (state: { product: ProductState }) => state.product
+  );
 
-  const [localSort, setLocalSort] = useState('');
+  const [localSort, setLocalSort] = useState(product.sort);
 
   const handleSortChange = (value: string) => {
     setLocalSort(value);

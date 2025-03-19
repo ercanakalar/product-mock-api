@@ -49,8 +49,7 @@ const ProductCard = (props: {
               src={props.product.image}
               width={160}
               height={120}
-              style={{ width: 'auto', height: 'auto' }}
-              unoptimized
+              priority
             />
             <p className='flex font-medium text-card-price text-xs lg:text-base lmd:text-base xl:text-base 2xl:text-base'>
               {convertCurrencyTr(Number(props.product.price))}

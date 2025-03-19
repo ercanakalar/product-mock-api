@@ -6,7 +6,14 @@ const nextConfig: NextConfig = {
     API_URL: 'https://5fc9346b2af77700165ae514.mockapi.io/products',
   },
   images: {
-    domains: ['loremflickr.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+        port: '',
+        pathname: '**',
+      },
+    ],
   },
   eslint: {
     dirs: ['src'],
