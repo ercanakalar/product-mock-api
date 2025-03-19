@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartItem, CartState } from '../../type/cart-type';
 
+const isBrowser = typeof window !== 'undefined';
+
 const initialState: CartState = {
-  items: JSON.parse(localStorage.getItem('cart') || '[]'),
+  items: isBrowser ? JSON.parse(localStorage.getItem('cart') || '[]') : [],
   totalPrice: 0,
   totalProducts: 0,
 };
